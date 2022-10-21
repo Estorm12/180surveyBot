@@ -1,5 +1,6 @@
 package ru.ifellow_180surveybot.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -7,6 +8,9 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.ifellow_180surveybot.config.BotConfig;
 
+import java.util.concurrent.ExecutorService;
+
+@Slf4j
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
 
@@ -34,7 +38,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     private void startCommandReceived(Long chatId, String name) {
-        String answer = "Hi, " + name + ", nice to kill you";
+        String answer = "Доброе время, " + name + ", приятно познакомиться";
 
         sendMessage(chatId, answer);
     }

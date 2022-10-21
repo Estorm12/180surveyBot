@@ -18,4 +18,9 @@ public class BotConfig {
     @Value("${bot.token}")
     String token;
 
+    @Value("${bot.queue.size}")
+    Integer queueSize;
+
+    @Value("${bot.thread.size}")
+    Integer maxThreadSize;
 }
