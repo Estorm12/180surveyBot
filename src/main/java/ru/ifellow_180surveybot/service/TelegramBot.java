@@ -8,7 +8,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.ifellow_180surveybot.config.BotConfig;
 
-import java.util.concurrent.ExecutorService;
 
 @Slf4j
 @Component
@@ -30,29 +29,15 @@ public class TelegramBot extends TelegramLongPollingBot {
             String messageText = update.getMessage().getText();
             Long chatId = update.getMessage().getChatId();
 
-            if ("/start".equals(messageText)) {
-                startCommandReceived(chatId, update.getMessage().getChat().getFirstName());
+            SendMessage message = new SendMessage();
+            message.setChatId(String.valueOf(chatId));
+            message.setText(messageText);
+
+            try {
+                execute(message);
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
             }
-        }
-
-    }
-
-    private void startCommandReceived(Long chatId, String name) {
-        String answer = "Доброе время, " + name + ", приятно познакомиться";
-
-        sendMessage(chatId, answer);
-    }
-
-    private void sendMessage(Long chatId, String textToSend) {
-        SendMessage message = new SendMessage();
-        message.setChatId(String.valueOf(chatId));
-        message.setText(textToSend);
-
-        try {
-            execute(message);
-        } catch (TelegramApiException e) {
-            throw new RuntimeException(e);
-
         }
     }
 
