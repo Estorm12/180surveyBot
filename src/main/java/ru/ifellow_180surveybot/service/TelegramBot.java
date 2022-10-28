@@ -24,8 +24,11 @@ public class TelegramBot extends TelegramLongPollingBot {
     final BotConfig config;
     private ExecutorService executorService;
 
-    public TelegramBot(BotConfig config){
+    private final KeyboardService keyboardService;
+
+    public TelegramBot(BotConfig config, KeyboardService keyboardService){
         this.config = config;
+        this.keyboardService = keyboardService;
     }
 
     @PostConstruct
@@ -59,6 +62,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             SendMessage messageSand = new SendMessage();
             messageSand.setChatId(String.valueOf(chatId));
             messageSand.setText(messageText);
+            messageSand.setReplyMarkup(keyboardService.getMainReplyKeyboard());
 
             try {
                 execute(messageSand);
